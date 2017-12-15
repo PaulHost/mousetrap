@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
     private final MouseTrapStarter game;
 
     private OrthographicCamera camera;
-    private Texture mouseImg, trapImg, floorImg, heartImg, bloodImg;
+    private Texture mouseImg, trapImg, floorImg, heartImg, bloodImg, gameOverImg;
     private Music music;
     private Sound dead;
     private Rectangle trap;
@@ -32,7 +32,7 @@ public class GameScreen implements Screen {
     private int speed = 200, mouseShowSpeed = 1000000000;
     private int sceneWidth, sceneHeight;
     private int mouseWidth, mouseHeight;
-    private int trapWidth, trapHeight, size = 1;
+    private int trapWidth, trapHeight, size = 2;
     private int heartWidth, heartHeight;
     private int bloodWidth, bloodHeight;
     private float bloodY = 0, bloodX = 0;
@@ -47,6 +47,7 @@ public class GameScreen implements Screen {
         floorImg = new Texture("floor.png");
         heartImg = new Texture("heart.png");
         bloodImg = new Texture("blood.png");
+        gameOverImg = new Texture("game_over.png");
         nombers = initNombers();
 
         music = Gdx.audio.newMusic(Gdx.files.internal("mouses.mp3"));
@@ -59,10 +60,10 @@ public class GameScreen implements Screen {
         mouseHeight = mouseImg.getHeight() / size;
         trapWidth = trapImg.getWidth() / size;
         trapHeight = trapImg.getHeight() / size;
-        heartWidth = heartImg.getWidth() / size;
-        heartHeight = heartImg.getHeight() / size;
-        bloodHeight = bloodImg.getHeight() / size;
-        bloodWidth = bloodImg.getWidth() / size;
+        heartWidth = sceneHeight / 10;
+        heartHeight = heartWidth;
+        bloodHeight = mouseHeight;
+        bloodWidth = mouseWidth;
 
 
         camera = new OrthographicCamera();
@@ -99,19 +100,22 @@ public class GameScreen implements Screen {
         game.batch.draw(floorImg, 0, 0, sceneWidth, sceneHeight);
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.draw(trapImg, trap.x, trap.y, trapWidth, trapHeight);
-        if (bloodY > 0)
+        if (bloodY > 0) {
             game.batch.draw(bloodImg, bloodX, bloodY, bloodHeight, bloodWidth);
-        if (mouseCatchCount > 0)
+        }
+        if (mouseCatchCount > 0) {
             setScore(game.batch, mouseCatchCount);
-        if (life > 0) {
-            setLives(game.batch, life);
-        } else {
-            //todo game over
         }
 
         for (Rectangle mouse : mouses) {
             game.batch.draw(mouseImg, mouse.x, mouse.y, mouseWidth, mouseHeight);
         }
+        if (life > 0) {
+            setLives(game.batch, life);
+        } else {
+            game.setScreen(new GameOverScreen(game, floorImg, gameOverImg, sceneHeight, sceneWidth));
+        }
+
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
@@ -139,7 +143,7 @@ public class GameScreen implements Screen {
                 mouseCatchCount++;
                 dead.play();
                 mouses.removeIndex(i);
-            } else if (mouses.get(i).y + sceneHeight < 0) {
+            } else if (mouses.get(i).y + mouseHeight < 0) {
                 life--;
                 mouses.removeIndex(i);
             }
@@ -175,10 +179,10 @@ public class GameScreen implements Screen {
     }
 
     private void setLives(final SpriteBatch batch, int count) {
-        int pos = sceneWidth - heartImg.getWidth();
+        int pos = sceneWidth - heartWidth;
         for (int i = 0; i < count; i++) {
             batch.draw(heartImg, pos, sceneHeight - heartHeight, heartHeight, heartWidth);
-            pos -= heartImg.getWidth();
+            pos -= heartWidth;
         }
     }
 
@@ -189,7 +193,7 @@ public class GameScreen implements Screen {
         int pos = 0;
         for (int i = 0; i < chars.size; i++) {
             texture = nombers.get(Character.getNumericValue(chars.get(i)));
-            batch.draw(texture, pos, sceneHeight - texture.getHeight(), texture.getHeight() / size, texture.getWidth() / size);
+            batch.draw(texture, pos, sceneHeight - texture.getHeight(), texture.getHeight(), texture.getWidth());
             pos += texture.getWidth();
         }
     }
