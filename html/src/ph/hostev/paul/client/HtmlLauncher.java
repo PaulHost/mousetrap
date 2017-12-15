@@ -3,7 +3,7 @@ package ph.hostev.paul.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import ph.hostev.paul.MousetrapStarter;
+import ph.hostev.paul.GameScreen;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new MousetrapStarter();
+                return new GameScreen();
         }
 }
