@@ -21,7 +21,7 @@ public class GameScreen implements Screen {
     private final MouseTrapStarter game;
 
     private OrthographicCamera camera;
-    private Texture mouseImg, trapImg, floorImg, heartImg, bloodImg, gameOverImg;
+    private Texture mouseImg, trapImg, floorImg, heartImg, bloodImg, gameOverImg, pouseImg;
     private Music music;
     private Sound dead;
     private Rectangle trap;
@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
         heartImg = new Texture("heart.png");
         bloodImg = new Texture("blood.png");
         gameOverImg = new Texture("game_over.png");
+        pouseImg = new Texture("pause.png");
         nombers = initNombers();
 
         music = Gdx.audio.newMusic(Gdx.files.internal("mouses.mp3"));
@@ -56,10 +57,10 @@ public class GameScreen implements Screen {
 
         sceneHeight = Gdx.graphics.getHeight();
         sceneWidth = Gdx.graphics.getWidth();
-        mouseWidth = mouseImg.getWidth() / size;
-        mouseHeight = mouseImg.getHeight() / size;
-        trapWidth = trapImg.getWidth() / size;
-        trapHeight = trapImg.getHeight() / size;
+        mouseWidth = sceneHeight / 7;
+        mouseHeight = mouseWidth + mouseWidth / 2;
+        trapWidth = mouseWidth;
+        trapHeight = trapWidth;
         heartWidth = sceneHeight / 10;
         heartHeight = heartWidth;
         bloodHeight = mouseHeight;
@@ -92,7 +93,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        mouseShowSpeed -= 50000; // TODO stop when 0.01382067___1759(imposible speed)___1089(count)___0
+//        mouseShowSpeed -= 50000; // TODO stop when 0.01382067___1759(imposible speed)___1089(count)___0
 
         camera.update();
 
@@ -116,6 +117,7 @@ public class GameScreen implements Screen {
             game.setScreen(new GameOverScreen(game, floorImg, gameOverImg, sceneHeight, sceneWidth));
         }
 
+        game.batch.draw(pouseImg, sceneWidth - heartWidth, sceneHeight - heartHeight, heartWidth, heartHeight);
         game.batch.end();
 
         if (Gdx.input.isTouched()) {
@@ -179,7 +181,7 @@ public class GameScreen implements Screen {
     }
 
     private void setLives(final SpriteBatch batch, int count) {
-        int pos = sceneWidth - heartWidth;
+        int pos = sceneWidth - heartWidth * 2;
         for (int i = 0; i < count; i++) {
             batch.draw(heartImg, pos, sceneHeight - heartHeight, heartHeight, heartWidth);
             pos -= heartWidth;
@@ -193,8 +195,8 @@ public class GameScreen implements Screen {
         int pos = 0;
         for (int i = 0; i < chars.size; i++) {
             texture = nombers.get(Character.getNumericValue(chars.get(i)));
-            batch.draw(texture, pos, sceneHeight - texture.getHeight(), texture.getHeight(), texture.getWidth());
-            pos += texture.getWidth();
+            batch.draw(texture, pos, sceneHeight - mouseHeight, mouseWidth, mouseHeight);
+            pos += mouseWidth;
         }
     }
 
