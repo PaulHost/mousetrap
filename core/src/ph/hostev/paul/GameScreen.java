@@ -29,10 +29,10 @@ public class GameScreen implements Screen {
     private Array<Texture> nombers;
     private Vector3 touchPosition;
     private long lastMousTime;
-    private int speed = 200, mouseShowSpeed = 1000000000;
+    private int speed = 200, step, mouseShowSpeed = 1000000000;
     private int sceneWidth, sceneHeight;
     private int mouseWidth, mouseHeight;
-    private int trapWidth, trapHeight, size = 2;
+    private int trapWidth, trapHeight;
     private int heartWidth, heartHeight;
     private int bloodWidth, bloodHeight;
     private float bloodY = 0, bloodX = 0;
@@ -66,6 +66,8 @@ public class GameScreen implements Screen {
         bloodHeight = mouseHeight;
         bloodWidth = mouseWidth;
 
+        speed = sceneHeight * 24 / 100;
+        step = speed / 100;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, sceneWidth, sceneHeight);
@@ -134,7 +136,7 @@ public class GameScreen implements Screen {
 
         if (TimeUtils.nanoTime() - lastMousTime > mouseShowSpeed) {
             showMouse();
-            speed++;
+            speed += step;
         }
 
         for (int i = 0; i < mouses.size; i++) {
