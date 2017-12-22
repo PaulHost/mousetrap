@@ -21,7 +21,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameState extends State {
 
-    private static GameState gameState = null;
     private OrthographicCamera camera;
     private Texture mouseImg, trapImg, floorImg, heartImg, bloodImg, playImg, pouseImg;
     private Sound dead;
@@ -139,6 +138,31 @@ public class GameState extends State {
     @Override
     protected void update(float dt) {
         handleInput();
+        if (play) {
+
+            if (trap.x < 0) trap.x = 0;
+            if (trap.x > sceneWidth - trapWidth) trap.x = sceneWidth - trapWidth;
+
+            if (TimeUtils.nanoTime() - lastMousTime > mouseShowSpeed) {
+                showMouse();
+                speed += step;
+            }
+
+            for (int i = 0; i < mouses.size; i++) {
+                mouses.get(i).y -= speed * Gdx.graphics.getDeltaTime();
+                if (mouses.get(i).overlaps(trap)) {
+                    bloodY = mouses.get(i).y;
+                    bloodX = mouses.get(i).x;
+                    mouseCatchCount++;
+                    dead.play();
+                    mouses.removeIndex(i);
+                } else if (mouses.get(i).y + mouseHeight < 0) {
+                    life--;
+                    mouses.removeIndex(i);
+                }
+            }
+
+        }
     }
 
     @Override
@@ -167,32 +191,6 @@ public class GameState extends State {
         }
 
         sb.end();
-
-        if (play) {
-
-            if (trap.x < 0) trap.x = 0;
-            if (trap.x > sceneWidth - trapWidth) trap.x = sceneWidth - trapWidth;
-
-            if (TimeUtils.nanoTime() - lastMousTime > mouseShowSpeed) {
-                showMouse();
-                speed += step;
-            }
-
-            for (int i = 0; i < mouses.size; i++) {
-                mouses.get(i).y -= speed * Gdx.graphics.getDeltaTime();
-                if (mouses.get(i).overlaps(trap)) {
-                    bloodY = mouses.get(i).y;
-                    bloodX = mouses.get(i).x;
-                    mouseCatchCount++;
-                    dead.play();
-                    mouses.removeIndex(i);
-                } else if (mouses.get(i).y + mouseHeight < 0) {
-                    life--;
-                    mouses.removeIndex(i);
-                }
-            }
-
-        }
 
         mStage.act(Gdx.graphics.getDeltaTime()); //Perform ui logic
         mStage.draw();

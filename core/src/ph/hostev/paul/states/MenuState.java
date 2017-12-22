@@ -8,13 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class MenuState extends State {
 
     Stage stage;
-    private Texture bg, playBtn;
+    private Texture bg, bf, playBtn;
     private int w, h, playWidth;
 
     public MenuState(GameStateManager gameStateManager, Stage stage) {
         super(gameStateManager);
         this.stage = stage;
         bg = new Texture("floor.png");
+        bf=new Texture("blood-frame.png");
         playBtn = new Texture("play.png");
 
 
@@ -38,6 +39,7 @@ public class MenuState extends State {
     protected void render(SpriteBatch sb) {
         sb.begin();
         sb.draw(bg, 0, 0, w, h);
+        sb.draw(bf, 0, 0, w, h);
         sb.draw(playBtn, w / 2 - playWidth / 2, h / 2 - playWidth / 2, playWidth, playWidth);
         sb.end();
     }
