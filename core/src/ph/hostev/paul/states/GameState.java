@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.CharArray;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import ph.hostev.paul.admob.IAdManager;
+
 public class GameState extends State {
 
     private OrthographicCamera camera;
@@ -42,11 +44,13 @@ public class GameState extends State {
     private Stage mStage;
     private ImageButton pauseBtn, playBtn;
     private boolean play = true;
+    private final IAdManager adMob;
 
 
-    public GameState(GameStateManager gameStateManager, final Stage stage) {
+    public GameState(GameStateManager gameStateManager, final Stage stage, final IAdManager adMob) {
         super(gameStateManager);
 
+        this.adMob = adMob;
         mouseImg = new Texture("mouse.png");
         trapImg = new Texture("mausetrap.png");
         floorImg = new Texture("floor.png");
@@ -97,6 +101,7 @@ public class GameState extends State {
                 play = false;
                 playBtn.setVisible(true);
                 pauseBtn.setVisible(false);
+                adMob.show();
             }
         });
 
@@ -111,6 +116,7 @@ public class GameState extends State {
                 play = true;
                 pauseBtn.setVisible(true);
                 playBtn.setVisible(false);
+                adMob.hide();
             }
         });
 
@@ -187,7 +193,7 @@ public class GameState extends State {
         if (life > 0) {
             setLives(sb, life);
         } else {
-            gsm.set(new MenuState(gsm, mStage));
+            gsm.set(new MenuState(gsm, mStage, adMob));
         }
 
         sb.end();

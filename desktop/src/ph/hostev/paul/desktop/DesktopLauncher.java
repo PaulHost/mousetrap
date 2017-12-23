@@ -11,6 +11,6 @@ public class DesktopLauncher {
         config.title = "MouseTrap";
         config.width = 800;
         config.height = 480;
-        new LwjglApplication(new GameScreen(), config);
+        new LwjglApplication(new GameScreen(adMob), config);
     }
 }
