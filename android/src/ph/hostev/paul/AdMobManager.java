@@ -11,16 +11,16 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
-import ph.hostev.paul.admob.IAdManager;
+import ph.hostev.paul.admob.AdManager;
 
-public class AdManager implements IAdManager {
+public class AdMobManager implements AdManager {
 
-    private final int ADSHOW = 1, ADHIDE = 0;
+    private static final int ADSHOW = 1, ADHIDE = 0;
 
-    private final String TEST_DEVISE = "", APP_ID;
+    private final String TEST_DEVISE = "", UNIT_ID;
 
-    public AdView adView = null;
-    public RelativeLayout.LayoutParams adParams = null;
+    AdView adView;
+    RelativeLayout.LayoutParams adParams;
 
     private Handler handler = new Handler() {
 
@@ -36,8 +36,8 @@ public class AdManager implements IAdManager {
         }
     };
 
-    public AdManager(String id) {
-        this.APP_ID = id;
+    public AdMobManager(String id) {
+        this.UNIT_ID = id;
     }
 
     public void init(Context context) {
@@ -51,7 +51,7 @@ public class AdManager implements IAdManager {
 
         adView = new AdView(context);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(APP_ID);
+        adView.setAdUnitId(UNIT_ID);
 
         AdRequest.Builder requestBuilder = new AdRequest.Builder();
         requestBuilder.addTestDevice(TEST_DEVISE);

@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.CharArray;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import ph.hostev.paul.admob.IAdManager;
+import ph.hostev.paul.admob.AdManager;
 
 public class GameState extends State {
 
@@ -44,10 +44,10 @@ public class GameState extends State {
     private Stage mStage;
     private ImageButton pauseBtn, playBtn;
     private boolean play = true;
-    private final IAdManager adMob;
+    private final AdManager adMob;
 
 
-    public GameState(GameStateManager gameStateManager, final Stage stage, final IAdManager adMob) {
+    public GameState(GameStateManager gameStateManager, final Stage stage, final AdManager adMob) {
         super(gameStateManager);
 
         this.adMob = adMob;
@@ -101,7 +101,7 @@ public class GameState extends State {
                 play = false;
                 playBtn.setVisible(true);
                 pauseBtn.setVisible(false);
-                adMob.show();
+                if (adMob != null) adMob.show();
             }
         });
 
@@ -116,7 +116,7 @@ public class GameState extends State {
                 play = true;
                 pauseBtn.setVisible(true);
                 playBtn.setVisible(false);
-                adMob.hide();
+                if (adMob != null) adMob.hide();
             }
         });
 

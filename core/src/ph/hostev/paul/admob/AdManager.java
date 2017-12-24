@@ -1,6 +1,6 @@
 package ph.hostev.paul.admob;
 
-public interface IAdManager {
+public interface AdManager {
 
     void show();
 

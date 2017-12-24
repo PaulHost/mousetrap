@@ -10,6 +10,6 @@ eclipse.project {
     name = appName + "-core"
 }
 
-dependencies {
-    compile project(path: ':android')
-}
+//dependencies {
+//    compile project(path: ':android')
+//}

@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import ph.hostev.paul.GameScreen;
+import ph.hostev.paul.admob.AdManager;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +47,7 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
+                AdManager adMob = null;
                 return new GameScreen(adMob);
         }
 }

@@ -5,16 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import ph.hostev.paul.admob.IAdManager;
+import ph.hostev.paul.admob.AdManager;
 
 public class MenuState extends State {
 
     Stage stage;
     private Texture bg, bf, playBtn;
     private int w, h, playWidth;
-    private IAdManager adMob;
+    private AdManager adMob;
 
-    public MenuState(GameStateManager gameStateManager, Stage stage, IAdManager adMob) {
+    public MenuState(GameStateManager gameStateManager, Stage stage, AdManager adMob) {
         super(gameStateManager);
         this.stage = stage;
         bg = new Texture("floor.png");
@@ -31,7 +31,7 @@ public class MenuState extends State {
     protected void handleInput() {
         if (Gdx.input.justTouched()) {
             gsm.set(new GameState(gsm, stage, adMob));
-            adMob.hide();
+            if (adMob != null) adMob.hide();
         }
 
     }

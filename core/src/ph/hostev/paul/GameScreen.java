@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import ph.hostev.paul.admob.IAdManager;
+import ph.hostev.paul.admob.AdManager;
 import ph.hostev.paul.states.GameStateManager;
 import ph.hostev.paul.states.MenuState;
 
@@ -15,9 +15,9 @@ public class GameScreen extends ApplicationAdapter {
     private GameStateManager gsm;
     private SpriteBatch batch;
     private Stage stage;
-    private IAdManager adMob;
+    private final AdManager adMob;
 
-    public GameScreen(IAdManager adMob) {
+    public GameScreen(AdManager adMob) {
         this.adMob = adMob;
     }
 
@@ -30,8 +30,8 @@ public class GameScreen extends ApplicationAdapter {
         Gdx.input.setInputProcessor(stage);
         Gdx.gl.glClearColor(1, 0, 0, 1);
 
+        if (adMob != null) adMob.show();
         gsm.push(new MenuState(gsm, stage, adMob));
-        adMob.show();
     }
 
     @Override

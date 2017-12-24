@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "26.0.2"
-    compileSdkVersion 14
+    compileSdkVersion 27
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -137,5 +137,5 @@ repositories {
     }
 }
 dependencies {
-    compile 'com.google.android.gms:play-services-ads:11.6.2'
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
 }
