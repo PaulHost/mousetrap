@@ -25,6 +25,8 @@ public class MenuState extends State {
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         playWidth = h / 6;
+
+        if (adMob != null) adMob.show();
     }
 
     @Override

@@ -30,7 +30,6 @@ public class GameScreen extends ApplicationAdapter {
         Gdx.input.setInputProcessor(stage);
         Gdx.gl.glClearColor(1, 0, 0, 1);
 
-        if (adMob != null) adMob.show();
         gsm.push(new MenuState(gsm, stage, adMob));
     }
 

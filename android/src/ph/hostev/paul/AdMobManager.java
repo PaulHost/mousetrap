@@ -1,6 +1,7 @@
 package ph.hostev.paul;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -45,7 +46,7 @@ public class AdMobManager implements AdManager {
         MobileAds.initialize(context, "ca-app-pub-9662067415857988~9718214790");
 
         adParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
 
@@ -53,8 +54,9 @@ public class AdMobManager implements AdManager {
         adParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
 
         adView = new AdView(context);
-        adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(UNIT_ID);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setBackgroundColor(Color.TRANSPARENT);
 
         AdRequest.Builder requestBuilder = new AdRequest.Builder();
         requestBuilder.addTestDevice(TEST_DEVISE);
