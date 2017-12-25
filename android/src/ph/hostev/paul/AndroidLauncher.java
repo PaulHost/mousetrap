@@ -18,14 +18,12 @@ public class AndroidLauncher extends AndroidApplication {
 
     public AndroidLauncher() {
         adMob = new AdMobManager("ca-app-pub-9662067415857988/1441883921");
-        MobileAds.initialize(context, "ca-app-pub-9662067415857988/1441883921");
         game = new GameScreen(adMob);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         adMob.init(context);
 
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();

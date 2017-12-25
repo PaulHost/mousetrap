@@ -130,12 +130,3 @@ idea {
         }
     }
 }
-repositories {
-    jcenter()
-    maven {
-        url "https://maven.google.com"
-    }
-}
-dependencies {
-    compile 'com.google.android.gms:play-services-ads:11.8.0'
-}

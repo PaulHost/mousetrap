@@ -1,6 +1,5 @@
 package ph.hostev.paul;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +9,7 @@ import android.widget.RelativeLayout;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import ph.hostev.paul.admob.AdManager;
 
@@ -31,7 +31,7 @@ public class AdMobManager implements AdManager {
                     adView.setVisibility(View.VISIBLE);
                     break;
                 case ADHIDE:
-                    adView.setVisibility(View.INVISIBLE);
+                    adView.setVisibility(View.GONE);
             }
         }
     };
@@ -41,6 +41,9 @@ public class AdMobManager implements AdManager {
     }
 
     public void init(Context context) {
+
+        MobileAds.initialize(context, "ca-app-pub-9662067415857988~9718214790");
+
         adParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
